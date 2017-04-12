@@ -1,0 +1,2 @@
+Name,Description,ManaCost,Type,Ability_One_Trigger,Ability_One_DrawAction1,Ability_One_SelectAction,Ability_One_ModifyAction,Ability_One_DrawAction2
+Fire Strike,Unleash a huge fricken fire bolt on an enemy,3,FIRE,ON_PLAY,null,"1, 1, USER, ENEMY_MONSTERS","10, DAMAGE",null

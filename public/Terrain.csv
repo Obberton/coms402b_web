@@ -1,0 +1,13 @@
+Name,Description,ManaCost,Type,Turns,Buff Value,Buff Stat,Buff Type,Debuff Value,Debuff Stat,Debuff Type,Ability_One_Name,Ability_One_Description,Ability_One_Trigger,Ability_One_ManaCost,Ability_One_DrawAction1,Ability_One_SelectAction,Ability_One_ModifyAction,Ability_One_DrawAction2
+Water Terrain H,Wet Ground,2,WATER,3,2,HEALTH,WATER,1,HEALTH,FIRE,,,,,,,,
+Fire Terrain H,Hot Ground,2,FIRE,3,2,HEALTH,FIRE,1,HEALTH,WATER,,,,,,,,
+Light Terrain H,Bright Ground,2,LIGHT,3,2,HEALTH,LIGHT,1,HEALTH,DARK,,,,,,,,
+Dark Terrain H,Shadowy Ground,2,DARK,3,2,HEALTH,DARK,1,HEALTH,LIGHT,,,,,,,,
+Forest Terrain H,Grassy Ground,2,FOREST,3,2,HEALTH,FOREST,1,HEALTH,MOUNTAIN,,,,,,,,
+Mountain Terrain H,Rocky Ground,2,MOUNTAIN,3,2,HEALTH,MOUNTAIN,1,HEALTH,FOREST,,,,,,,,
+Water Terrain D,Wet Ground,2,WATER,3,2,DAMAGE,WATER,1,DAMAGE,FIRE,,,,,,,,
+Fire Terrain D,Hot Ground,2,FIRE,3,2,DAMAGE,FIRE,1,DAMAGE,WATER,,,,,,,,
+Light Terrain D,Bright Ground,2,LIGHT,3,2,DAMAGE,LIGHT,1,DAMAGE,DARK,,,,,,,,
+Dark Terrain D,Shadowy Ground,2,DARK,3,2,DAMAGE,DARK,1,DAMAGE,LIGHT,,,,,,,,
+Forest Terrain D,Grassy Ground,2,FOREST,3,2,DAMAGE,FOREST,1,DAMAGE,MOUNTAIN,,,,,,,,
+Mountain Terrain D,Rocky Ground,2,MOUNTAIN,3,2,DAMAGE,MOUNTAIN,1,DAMAGE,FOREST,,,,,,,,
