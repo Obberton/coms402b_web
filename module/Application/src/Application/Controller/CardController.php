@@ -67,4 +67,16 @@ class CardController extends AbstractActionController
         $this->entity->flush();
         return new JsonModel();
     }
+
+    public function getAllCardsAction()
+    {
+        $this->entity = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
+
+        $allObjects = $this->entity->getRepository('Application\Entity\Card')->findAll();
+        $cardArray = array_map(function($obj){
+            return $obj->getName();
+        }, $allObjects);
+
+        return new JsonModel($cardArray);
+    }
 }
