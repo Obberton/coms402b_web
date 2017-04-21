@@ -12,27 +12,16 @@ namespace Application\Controller;
 use Application\Entity\Card;
 use Application\Entity\Deck;
 use Application\Entity\User;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
-class CardController extends AbstractActionController
+class CardController extends AbstractController
 {
-    private $entity;
-
-    public function indexAction()
-    {
-        echo "it works";
-        die();
-    }
-
     public function importCSVAction()
     {
-        $this->entity = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
-
-        $allObjects = $this->entity->getRepository('Application\Entity\Card')->findAll();
+        $allObjects = $this->entity()->getRepository('Application\Entity\Card')->findAll();
         foreach($allObjects as $object) {
-            $this->entity->remove($object);
+            $this->entity()->remove($object);
         }
 
         $monsterfile = new \SplFileObject("public/Monsters.csv");
@@ -47,32 +36,30 @@ class CardController extends AbstractActionController
             if($row[0] != 'Name') {
                 $card = new Card();
                 $card->setName($row[0]);
-                $this->entity->persist($card);
+                $this->entity()->persist($card);
             }
         }
         foreach($spellfile as $row) {
             if($row[0] != 'Name') {
                 $card = new Card();
                 $card->setName($row[0]);
-                $this->entity->persist($card);
+                $this->entity()->persist($card);
             }
         }
         foreach($terrainfile as $row) {
             if($row[0] != 'Name') {
                 $card = new Card();
                 $card->setName($row[0]);
-                $this->entity->persist($card);
+                $this->entity()->persist($card);
             }
         }
-        $this->entity->flush();
+        $this->entity()->flush();
         return new JsonModel();
     }
 
     public function getAllCardsAction()
     {
-        $this->entity = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
-
-        $allObjects = $this->entity->getRepository('Application\Entity\Card')->findAll();
+        $allObjects = $this->entity()->getRepository('Application\Entity\Card')->findAll();
         $cardArray = array_map(function($obj){
             return $obj->getName();
         }, $allObjects);

@@ -10,10 +10,9 @@ namespace Application\Controller;
 
 
 use Application\Entity\Deck;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 
-class DeckController extends AbstractActionController
+class DeckController extends AbstractController
 {
     public function addAction()
     {
@@ -22,12 +21,56 @@ class DeckController extends AbstractActionController
 
     public function addDeckAction()
     {
-        $objectManager = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
         $deck = new Deck();
-        $user = $objectManager->getRepository("Application\\Entity\\User")->findOneBy(['username' => $_REQUEST['username']]);
+        $user = $this->user();
+        /* @var $user \Application\Entity\User */
         $deck->setUser($user);
-        $objectManager->persist($deck);
-        $objectManager->flush();
+        $this->entity()->persist($deck);
+        $this->entity()->flush();
+        return new JsonModel();
+    }
+
+    public function removeDeckAction()
+    {
+        $user = $this->user();
+
+    }
+
+    public function addCardAction()
+    {
+        $user = $this->user();
+        $deckId = $this->request("deckid");
+        $deck = $this->entity()->getRepository("Application\\Entity\\Deck")->findOneBy(['id'=>$deckId]);
+        $cardname = $this->request("sessionid");
+        $card = $this->entity()->getRepository("Application\\Entity\\Card")->findOneBy(['name'=>$cardname]);
+        if(!$card||!$deck)
+        {
+            http_response_code(404);
+            die;
+        }
+        /* @var $deck Deck */
+        /* @var $card \Application\Entity\Card */
+        $deck->getCards()->add($card);
+        $this->entity()->flush();
+        return new JsonModel();
+    }
+
+    public function removeCardAction()
+    {
+        $user = $this->user();
+        $deckId = $this->request("deckid");
+        $deck = $this->entity()->getRepository("Application\\Entity\\Deck")->findOneBy(['id'=>$deckId]);
+        $cardname = $this->request("sessionid");
+        $card = $this->entity()->getRepository("Application\\Entity\\Card")->findOneBy(['name'=>$cardname]);
+        if(!$card||!$deck)
+        {
+            http_response_code(404);
+            die;
+        }
+        /* @var $deck Deck */
+        /* @var $card \Application\Entity\Card */
+        $deck->getCards()->removeElement($card);
+        $this->entity()->flush();
         return new JsonModel();
     }
 }

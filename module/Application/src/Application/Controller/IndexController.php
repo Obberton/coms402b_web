@@ -10,26 +10,18 @@
 namespace Application\Controller;
 
 use Application\Entity\User;
-use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use Zend\View\Model\ViewModel;
 
-class IndexController extends AbstractActionController
+class IndexController extends AbstractController
 {
-    /**
-     * @var \Doctrine\ORM\EntityManager
-     */
-    private $entity;
-
     public function indexAction()
     {
-        $objectManager = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
-
         $user = new \Application\Entity\User();
         $user->setUsername('obberton');
         $user->setPassword('password');
 
-        $allObjects = $objectManager->getRepository('Application\Entity\User')->findAll();
+        $allObjects = $this->entity()->getRepository('Application\Entity\User')->findAll();
         $jsonArray = array_map(function($obj){
             /* @var $obj \Application\Entity\User */
             return $obj->getJsonData();
@@ -39,28 +31,51 @@ class IndexController extends AbstractActionController
 
     public function addAction()
     {
-        $this->entity = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
-
         $user = new User();
         $user->setUsername($_REQUEST['username']);
         $user->setPassword($_REQUEST['password']);
 
-        $this->entity->persist($user);
-        $this->entity->flush();
+        $this->entity()->persist($user);
+        $this->entity()->flush();
 
         return new JsonModel($_REQUEST);
     }
 
+    public function loginAction()
+    {
+        $username = $this->request('username');
+        $password = $this->request('password');
+        /* @var $user User */
+        $user = $this->entity()->getRepository('Application\Entity\User')->findOneBy(['username'=>$username, 'password'=>$password]);
+        if(!$user) {
+            http_response_code(401);
+            die;
+        }
+        $user->setSessionId($user->getUsername().time());
+        $this->entity()->flush();
+        return new JsonModel([
+            'sessionId' => $user->getSessionId()
+        ]);
+    }
+
+    public function getUserDecksAction()
+    {
+        $user = $this->entity()->getRepository('Application\Entity\User')->findOneBy(['username'=>$this->request('username')]);
+        if(!$user) {
+            http_response_code(404);
+            die;
+        }
+        return new JsonModel($user->getJsonData());
+    }
+
     public function removeAllUsersAction()
     {
-        $objectManager = $this->serviceLocator->get('Doctrine\ORM\EntityManager');
-
-        $allObjects = $objectManager->getRepository('Application\Entity\User')->findAll();
+        $allObjects = $this->entity()->getRepository('Application\Entity\User')->findAll();
         foreach($allObjects as $object)
         {
-            $objectManager->remove($object);
+            $this->entity()->remove($object);
         }
-        $objectManager->flush();
+        $this->entity()->flush();
         return new JsonModel();
     }
 }

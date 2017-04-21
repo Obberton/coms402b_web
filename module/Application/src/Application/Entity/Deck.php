@@ -89,6 +89,7 @@ class Deck
         }
 
         return [
+            "id" => $this->getId(),
             "cards" => $cards
         ];
     }

@@ -35,6 +35,12 @@ class User {
     protected $decks;
 
     /**
+     * @var string
+     * @ORM\Column
+     */
+    protected $sessionId;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -88,17 +94,46 @@ class User {
     public function getJsonData()
     {
         $decks = [];
-        //var_dump($decks);
         foreach($this->decks as $deck)
         {
             $decks[] = $deck->getJsonData();
         }
 
         return [
-            //'id' => $this->id,
             'username' => $this->username,
-            'password' => $this->password,
             'decks' => $decks
         ];
+    }
+
+    /**
+     * @return Deck[]|ArrayCollection
+     */
+    public function getDecks()
+    {
+        return $this->decks;
+    }
+
+    /**
+     * @param Deck[]|ArrayCollection $decks
+     */
+    public function setDecks($decks)
+    {
+        $this->decks = $decks;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSessionId()
+    {
+        return $this->sessionId;
+    }
+
+    /**
+     * @param mixed $sessionId
+     */
+    public function setSessionId($sessionId)
+    {
+        $this->sessionId = $sessionId;
     }
 }

@@ -80,4 +80,9 @@ class Card
     {
         $this->decks = $decks;
     }
+
+    public function getJsonData()
+    {
+        return $this->name;
+    }
 }
