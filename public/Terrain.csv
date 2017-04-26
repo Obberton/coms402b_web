@@ -1,5 +1,5 @@
 Name,Description,ManaCost,Type,Turns,Buff Value,Buff Stat,Buff Type,Debuff Value,Debuff Stat,Debuff Type,Ability_One_Name,Ability_One_Description,Ability_One_Trigger,Ability_One_ManaCost,Ability_One_DrawAction1,Ability_One_SelectAction,Ability_One_ModifyAction,Ability_One_DrawAction2
-Water Terrain H,Wet Ground,2,WATER,3,2,HEALTH,WATER,1,HEALTH,FIRE,,,,,,,,
+Water Terrain H,Wet Ground,2,WATER,3,2,HEALTH,WATER,100,HEALTH,FIRE,,,,,,,,
 Fire Terrain H,Hot Ground,2,FIRE,3,2,HEALTH,FIRE,1,HEALTH,WATER,,,,,,,,
 Light Terrain H,Bright Ground,2,LIGHT,3,2,HEALTH,LIGHT,1,HEALTH,DARK,,,,,,,,
 Dark Terrain H,Shadowy Ground,2,DARK,3,2,HEALTH,DARK,1,HEALTH,LIGHT,,,,,,,,
